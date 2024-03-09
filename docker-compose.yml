@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  java:
+    build: ./docker/java
+    env_file:
+      - ./docker/java/.env
+    command: sh ./gradlew build --continuous # 自動ビルド実行
+    tty: true
+    working_dir: /app
+    volumes:
+      - ./spring:/app
+    ports:
+      - 8080:8080 # 通常実行用
+      - 5050:5050 # デバッグ用
+    depends_on:
+      - mysql
+  mysql:
+    build: ./docker/mysql
+    env_file:
+      - ./docker/mysql/db.env # MySQL設定ファイル
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql # 実データの永続化
+      - ./docker/mysql/log:/var/log/mysql # logの永続化
+    ports:
+      - 3306:3306
