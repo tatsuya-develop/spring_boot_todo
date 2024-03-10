@@ -1,10 +1,6 @@
-version: '3'
-
 services:
   java:
     build: ./docker/java
-    env_file:
-      - ./docker/java/.env
     command: sh ./gradlew build --continuous # 自動ビルド実行
     tty: true
     working_dir: /app
