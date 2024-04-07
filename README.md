@@ -15,7 +15,7 @@
 - (※)本来の目的は、コンテナ内でもGit操作をできるようにするためだが、まだ実現できていない。
 
 ### 2. Docker Compose を使って開発環境を作成
-1. Terminalから、`spring-boot-practice` があるディレクトリに移動する。
+1. Terminalから、`spring_boot_todo` があるディレクトリに移動する。
 2. 以下、Terminal操作
     ```bash
     # Dockerコンテナの作成
