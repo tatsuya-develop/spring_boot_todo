@@ -58,7 +58,6 @@ const viewProjectLists = () => {
   $.each(Projects, (_, project) => $('#Task_LeftSideBar_Project').append(generateProjectElement(project)));
 };
 
-//
 const viewIncompleteTaskList = () => {
   // リセット
   $('#Task_Main_List_Incomplete_Contents .accordion-body').empty();
@@ -221,7 +220,27 @@ const generateTaskElement = (task, is_completed = false) => {
   const rowDiv = $('<div>').addClass('row').data('id', task.id);
   rowDiv.append(colDiv);
 
+  rowDiv.on('click', (e) => {
+    // TODO: 既に開いている && 同じ task.id の場合は閉じる
+
+    // TODO: 既に開いている && 異なる task.id の場合は、書き換える。
+  });
+
   return rowDiv;
+};
+
+const toggleRightBar = (e) => {
+  const rightBar = $("#Task_RightSideBar");
+  const isOpen = rightBar.data("open");
+
+  if (!isOpen) {
+    rightBar.addClass("open").data("open", true);
+    return;
+  }
+
+  // TODO: 開いて表示しているTaskが何なのか？を判別する方法が必要。
+  //     | open か close の状態を示す方法として、data-idを付与する方法があるかも？
+  // if (e.data('id') == )
 };
 
 const generateIncompleteTaskCircleIconElement = (task) => {
