@@ -1,0 +1,14 @@
+{
+    "recommendations": [
+      "biomejs.biome",
+      "xabikos.JavaScriptSnippets",
+      "formulahendry.auto-rename-tag",
+      "formulahendry.auto-close-tag",
+      "ecmel.vscode-html-css",
+      "dsznajder.es7-react-js-snippets",
+      "shardulm94.trailing-spaces",
+      "christian-kohler.path-intellisense",
+      "MS-CEINTL.vscode-language-pack-ja",
+      "aaron-bond.better-comments"
+    ]
+  }
