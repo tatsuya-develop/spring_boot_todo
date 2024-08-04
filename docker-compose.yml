@@ -20,3 +20,13 @@ services:
       - ./docker/mysql/log:/var/log/mysql # logの永続化
     ports:
       - 3306:3306
+  node:
+    build: ./docker/node
+    working_dir: /app
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./react:/app
+    command: sh -c "npm install && npm run dev"
+    ports:
+      - 3000:3000
