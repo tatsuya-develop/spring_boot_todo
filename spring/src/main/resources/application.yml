@@ -1,7 +1,7 @@
 # データベース接続設定
 spring:
   datasource:
-    url: jdbc:mysql://mysql:3306/spring_boot_todo
+    url: jdbc:mysql://mysql:3306/spring_boot_todo?forceConnectionTimeZoneToSession=true
     username: admin
     password: secret
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -9,3 +9,5 @@ spring:
     enabled: true
     baseline-on-migrate: true
     out-of-order: true
+  jackson:
+    time-zone: Asia/Tokyo

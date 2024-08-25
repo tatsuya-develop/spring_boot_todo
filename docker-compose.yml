@@ -1,8 +1,10 @@
 services:
   java:
     build: ./docker/java
-    command: sh ./gradlew build --continuous # 自動ビルド実行
+    command: sh -c "./gradlew build --continuous -Duser.timezone=Asia/Tokyo" # 自動ビルド実行
     tty: true
+    environment:
+      - JAVA_OPTS=-Duser.timezone=Asia/Tokyo
     working_dir: /app
     volumes:
       - ./spring:/app
@@ -15,6 +17,8 @@ services:
     build: ./docker/mysql
     env_file:
       - ./docker/mysql/db.env # MySQL設定ファイル
+    environment:
+      - TZ=Asia/Tokyo
     volumes:
       - ./docker/mysql/data:/var/lib/mysql # 実データの永続化
       - ./docker/mysql/log:/var/log/mysql # logの永続化
