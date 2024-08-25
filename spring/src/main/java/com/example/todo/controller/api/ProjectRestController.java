@@ -26,13 +26,13 @@ public class ProjectRestController {
   }
 
   @GetMapping
-  public ResponseEntity<List<Project>> invoke() {
+  public ResponseEntity<List<Project>> get() {
     List<Project> projects = this.projectListService.invoke();
     return ResponseEntity.ok(projects);
   }
 
   @PostMapping
-  public ResponseEntity<Project> invoke(@Valid @RequestBody ProjectCreateRestRequest request) {
+  public ResponseEntity<Project> create(@Valid @RequestBody ProjectCreateRestRequest request) {
     Project project = this.projectCreateService.invoke(request);
     return ResponseEntity.ok(project);
   }

@@ -11,9 +11,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import com.example.todo.enums.task.TaskPriority;
 import lombok.Data;
 
@@ -37,6 +41,11 @@ public class Task {
   @ManyToOne
   @JoinColumn(name = "parent_id")
   private Task parent;
+
+  @ManyToMany
+  @JoinTable(name = "task_tags", joinColumns = @JoinColumn(name = "task_id"),
+      inverseJoinColumns = @JoinColumn(name = "tag_id"))
+  private Set<Tag> tags = new HashSet<>();
 
   @NotNull
   @Column(length = 255)
@@ -81,6 +90,10 @@ public class Task {
 
   public boolean isCompleted() {
     return this.getCompletedAt() != null;
+  }
+
+  public void toggleCompleted() {
+    this.setCompletedAt(this.isCompleted() ? null : LocalDateTime.now());
   }
 }
 

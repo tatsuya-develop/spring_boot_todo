@@ -13,10 +13,10 @@ public class TaskCreateRestRequest {
 
   private final Integer projectId;
 
-  @NotEmpty
-  private final String priority;
+  // TODO: カスタムバリデーションアノテーションを追加するか...？
+  private final Integer priority;
 
   public TaskPriority getPriority() {
-    return TaskPriority.valueOf(this.priority);
+    return TaskPriority.fromValue(this.priority);
   }
 }
