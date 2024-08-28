@@ -57,3 +57,22 @@ bootRun {
 	systemProperties = System.properties
 	jvmArgs=["-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5050"]
 }
+
+/**
+ * `sh gradlew flywayClean` の実行に失敗する。
+ * しかし Spring Boot アプリケーションで自動実行される Flyway のマイグレーションは成功する。
+ * 原因は、Flyway のバージョンが JDBC??Gradle?? のバージョンと合っていないことが可能性として考えられる。
+ * 根本解消に沼ったため、一旦諦める。
+ * 再構築したい場合は、手動でのやり直しをする。
+ *
+ * 1. mysql コンテナにアクセスし、 `mysql -u admin -p` でログインする。
+ * 2. `DROP DATABASE spring_boot_todo;` でデータベースを削除する。
+ * 3. `CREATE DATABASE spring_boot_todo;` でデータベースを再作成する。
+ * 4. Spring Boot アプリケーションを再起動する。
+ */
+// flyway {
+//   url = "jdbc:mysql://mysql:3306/spring_boot_todo"
+//   user = "admin"
+//   password = "secret"
+//   driver = "com.mysql.cj.jdbc.Driver"
+// }

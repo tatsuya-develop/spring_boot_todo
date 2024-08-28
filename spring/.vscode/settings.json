@@ -1,0 +1,33 @@
+{
+  "editor.insertSpaces": true,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "[html]": {
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true
+  },
+  "[css]": {
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true
+  },
+  "[javascript]": {
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true
+  },
+  "[java]": {
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true
+  },
+  "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
+  "java.format.settings.profile": "GoogleStyle",
+  "[json]": {
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true
+  },
+  "[yaml]": {
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true
+  },
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.compile.nullAnalysis.mode": "automatic",
+}

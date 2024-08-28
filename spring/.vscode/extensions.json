@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "vscjava.vscode-java-pack",
+    "vmware.vscode-boot-dev-pack",
+    "vscjava.vscode-gradle",
+    "shardulm94.trailing-spaces",
+    "christian-kohler.path-intellisense",
+    "MS-CEINTL.vscode-language-pack-ja",
+    "aaron-bond.better-comments"
+  ]
+}

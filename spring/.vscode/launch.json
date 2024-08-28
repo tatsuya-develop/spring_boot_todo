@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "java (Attach)",
+      "request": "attach",
+      "hostName": "localhost",
+      "port": 5050
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-TodoApplication<app>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.example.todo.TodoApplication",
+      "projectName": "app",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
