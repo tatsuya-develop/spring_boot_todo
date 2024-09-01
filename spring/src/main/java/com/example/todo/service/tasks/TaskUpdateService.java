@@ -2,6 +2,8 @@ package com.example.todo.service.tasks;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import com.example.todo.dto.request.tasks.TaskUpdateRestRequest;
@@ -34,9 +36,14 @@ public class TaskUpdateService {
       task.setProject(this.projectRepository.findById(request.getProjectId().intValue())
           .orElseThrow(() -> new EntityNotFoundException(
               "Project not found with ID: " + request.getProjectId())));
+    } else {
+      task.setProject(null);
     }
 
-    if (!request.getTagIds().isEmpty()) {
+    Set<Integer> currentTagIds =
+        task.getTags().stream().map(Tag::getId).collect((Collectors.toSet()));
+
+    if (!currentTagIds.equals(request.getTagIds())) {
       List<Tag> tags = this.tagRepository.findAllById(request.getTagIds());
       task.setTags(new HashSet<>(tags));
     }

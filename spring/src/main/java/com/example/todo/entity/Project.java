@@ -18,6 +18,8 @@ import lombok.Data;
 @Table(name = "projects")
 public class Project {
 
+  public static final Integer DEFDULT_PROJECT_ID = null;
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;

@@ -38,9 +38,6 @@ public class Tag {
   @Column(name = "updated_at", nullable = false)
   private LocalDateTime updatedAt;
 
-  @Column(name = "deleted_at")
-  private LocalDateTime deletedAt;
-
   // 新規作成処理前に呼び出される。
   @PrePersist
   protected void onCreate() {

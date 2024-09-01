@@ -27,7 +27,6 @@ import com.example.todo.service.tasks.TaskUpdateService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PutMapping;
 
-
 @RestController
 @RequestMapping("/api/tasks")
 public class TaskRestController {
