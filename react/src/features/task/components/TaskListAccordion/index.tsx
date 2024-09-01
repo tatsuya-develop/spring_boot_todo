@@ -1,5 +1,5 @@
 import ToggleTaskCompletedIconButton from "@/features/task/components/ToggleTaskCompletedIconButton";
-import { useTaskContext } from "@/features/task/contexts";
+import useTaskContext from "@/features/task/hooks/useTaskContext";
 import type Task from "@/features/task/models/task";
 import { getDeadline, isTaskCompleted } from "@/features/task/models/task";
 import {
@@ -23,14 +23,10 @@ interface TaskListAccordionProps {
 }
 
 const TaskListAccordion = (props: TaskListAccordionProps) => {
-  const { selectedTask, selectTask } = useTaskContext();
+  const { selectedTask, selectTask, resetSelectedTask } = useTaskContext();
 
   const switchSelectedTask = (task: Task) => {
-    if (task.id === selectedTask?.id) {
-      selectTask(undefined);
-      return;
-    }
-    selectTask(task);
+    task.id === selectedTask?.id ? resetSelectedTask() : selectTask(task);
   };
 
   const displayRightArea = (task: Task) => {

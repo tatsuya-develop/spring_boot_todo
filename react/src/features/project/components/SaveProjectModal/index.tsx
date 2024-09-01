@@ -1,4 +1,4 @@
-import { useProjectContext } from "@/features/project/contexts";
+import useProjectContext from "@/features/project/hooks/useProjectContext";
 import ProjectSchema, {
   type ProjectSchemaType,
 } from "@/features/project/forms/projectSchema";

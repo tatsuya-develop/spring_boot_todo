@@ -1,12 +1,26 @@
-import { useProjectContext } from "@/features/project/contexts";
+import useProjectContext from "@/features/project/hooks/useProjectContext";
 import type Project from "@/features/project/models/project";
+import { getProjectName } from "@/features/project/models/project";
 import {
   type UpdateTaskSchemaType,
   generateUpdateTaskSchema,
 } from "@/features/task/forms/updateTaskSchema";
 import useGetSelectedTask from "@/features/task/hooks/useGetSelectedTask";
-import { Flex, Icon, Select, Text } from "@chakra-ui/react";
-import { faList } from "@fortawesome/free-solid-svg-icons";
+import {
+  Button,
+  Flex,
+  Icon,
+  List,
+  ListItem,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { faCheck, faList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type Props = {
@@ -16,12 +30,21 @@ type Props = {
 const RightBarSelectProject = ({ onChange }: Props) => {
   const selectedTask = useGetSelectedTask();
   const { projects } = useProjectContext();
-
-  const onClickProject = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const showSelectingCheck = (project?: Project) => {
+    return selectedTask.project?.id === project?.id ? (
+      <Icon as={FontAwesomeIcon} icon={faCheck} />
+    ) : (
+      <></>
+    );
+  };
+  const projectList = [undefined, ...projects];
+  const onClickProject = async (project?: Project) => {
     const task = generateUpdateTaskSchema(selectedTask);
-    task.projectId = Number(e.target.value);
+    task.projectId = project?.id;
 
     onChange(task);
+    onClose();
   };
 
   return (
@@ -30,22 +53,41 @@ const RightBarSelectProject = ({ onChange }: Props) => {
         <Icon as={FontAwesomeIcon} icon={faList} />
         <Text>プロジェクト</Text>
       </Flex>
-      <Select
-        value={selectedTask.project?.id}
-        onChange={onClickProject}
-        variant="unstyled"
-        textAlign="right"
-        // biome-ignore lint/complexity/noUselessFragments: <explanation>
-        icon={<></>}
-        sx={{ paddingInlineEnd: 0 }}
-        cursor="pointer"
+      <Popover
+        isOpen={isOpen}
+        onOpen={onOpen}
+        onClose={onClose}
+        closeOnBlur={true}
       >
-        {projects.map((project: Project) => (
-          <option key={project.id} value={project.id}>
-            {project.name}
-          </option>
-        ))}
-      </Select>
+        <PopoverTrigger>
+          <Button variant="transparent" px={0}>
+            <Text fontWeight="normal">
+              {getProjectName(selectedTask.project)}
+            </Text>
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent>
+          <PopoverArrow />
+          <PopoverBody>
+            <List spacing={3}>
+              {projectList.map((project) => (
+                <ListItem
+                  as={Flex}
+                  key={project?.id ?? "UNSELECTED PROJECT"}
+                  cursor="pointer"
+                  onClick={() => onClickProject(project)}
+                  justifyContent="space-between"
+                  alignItems="center"
+                  gap={2}
+                >
+                  <Text>{getProjectName(project)}</Text>
+                  {showSelectingCheck(project)}
+                </ListItem>
+              ))}
+            </List>
+          </PopoverBody>
+        </PopoverContent>
+      </Popover>
     </Flex>
   );
 };

@@ -1,11 +1,11 @@
 import LeftBar from "@/components/pages/Home/LeftBar";
 import Main from "@/components/pages/Home/Main";
 import RightBar from "@/components/pages/Home/RightBar";
-import { useProjectContext } from "@/features/project/contexts";
+import useProjectContext from "@/features/project/hooks/useProjectContext";
 import { searchProjects } from "@/features/project/services/projectService";
 import { useTagContext } from "@/features/tag/contexts";
 import { searchTags } from "@/features/tag/services/tagService";
-import { useTaskContext } from "@/features/task/contexts";
+import useTaskContext from "@/features/task/hooks/useTaskContext";
 import { searchTasks } from "@/features/task/services/taskService";
 import { Grid, GridItem } from "@chakra-ui/react";
 import { useEffect } from "react";
@@ -20,17 +20,11 @@ const HomePage = () => {
     searchTags().then((data) => setTags(data));
   }, [setProjects, setTags]);
 
-  // selectedTask の変更時にタスクを再取得する
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (!selectedProject) {
-      return setTasks([]);
-    }
-
-    searchTasks({ projectId: selectedProject.id }).then((data) =>
+    searchTasks({ projectId: selectedProject?.id }).then((data) =>
       setTasks(data),
     );
-  }, [selectedProject, setTasks, selectedTask]);
+  }, [selectedProject, setTasks]);
 
   return (
     <>

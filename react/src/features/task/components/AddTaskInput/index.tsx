@@ -1,8 +1,10 @@
-import { useProjectContext } from "@/features/project/contexts";
+import useProjectContext from "@/features/project/hooks/useProjectContext";
 import TaskSchema, {
   type CreateTaskSchemaType,
   createTaskSchemaDefaultValues,
 } from "@/features/task/forms/createTaskSchema";
+import useTaskContext from "@/features/task/hooks/useTaskContext";
+import type { TaskPriorityType } from "@/features/task/models/taskPriority";
 import { createTask } from "@/features/task/services/taskService";
 import {
   Box,
@@ -15,7 +17,6 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
-import { useTaskContext } from "../../contexts";
 import PrioritySelectBox from "../PrioritySelectBox";
 
 const AddTaskInput = () => {
@@ -68,7 +69,7 @@ const AddTaskInput = () => {
             render={({ field }) => (
               <PrioritySelectBox
                 value={field.value}
-                onChange={field.onChange}
+                onChange={(priority) => field.onChange(priority.value)}
               />
             )}
           />

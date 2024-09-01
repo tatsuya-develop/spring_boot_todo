@@ -1,4 +1,4 @@
-import { useTaskContext } from "../contexts";
+import useTaskContext from "@/features/task/hooks/useTaskContext";
 import type Task from "../models/task";
 
 const useGetSelectedTask = (): Task => {

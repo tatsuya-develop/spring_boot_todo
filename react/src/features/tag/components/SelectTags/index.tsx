@@ -1,5 +1,6 @@
 import ToggleIconButton from "@/components/common/ToggleIconButton";
 import { useTagContext } from "@/features/tag/contexts";
+import type Tag from "@/features/tag/models/tag";
 import {
   Button,
   ButtonGroup,
@@ -18,7 +19,6 @@ import {
 import { faPlus, faTag } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import type Tag from "../../models/tag";
 
 type Props = {
   selectedTags: Tag[];
@@ -53,15 +53,19 @@ const SelectTags = ({ selectedTags, onClick }: Props) => {
   return (
     <Popover isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
       <PopoverTrigger>
-        <Button
-          leftIcon={<FontAwesomeIcon icon={faPlus} />}
-          colorScheme="gray"
-          variant="outline"
-          size="sm"
-          borderRadius="full"
-        >
-          タグ
-        </Button>
+        {tags.length ? (
+          <Button
+            leftIcon={<FontAwesomeIcon icon={faPlus} />}
+            colorScheme="gray"
+            variant="outline"
+            size="sm"
+            borderRadius="full"
+          >
+            タグ
+          </Button>
+        ) : (
+          <></>
+        )}
       </PopoverTrigger>
       <PopoverContent>
         <PopoverArrow />

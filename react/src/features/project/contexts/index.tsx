@@ -1,14 +1,17 @@
 import type Project from "@/features/project/models/project";
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 
-interface ProjectContextType {
+export interface ProjectContextType {
   projects: Project[];
   selectedProject?: Project;
   setProjects: (projects: Project[]) => void;
-  selectProject: (project?: Project) => void;
+  selectProject: (project: Project) => void;
+  resetProject: () => void;
 }
 
-const ProjectContext = createContext<ProjectContextType | undefined>(undefined);
+export const ProjectContext = createContext<ProjectContextType | undefined>(
+  undefined,
+);
 
 export const ProjectProvider = ({
   children,
@@ -17,21 +20,20 @@ export const ProjectProvider = ({
   const [selectedProject, setSelectedProject] = useState<Project | undefined>(
     undefined,
   );
-  const selectProject = (project?: Project) => setSelectedProject(project);
+  const selectProject = (project: Project) => setSelectedProject(project);
+  const resetProject = () => setSelectedProject(undefined);
 
   return (
     <ProjectContext.Provider
-      value={{ projects, selectedProject, setProjects, selectProject }}
+      value={{
+        projects,
+        selectedProject,
+        setProjects,
+        selectProject,
+        resetProject,
+      }}
     >
       {children}
     </ProjectContext.Provider>
   );
-};
-
-export const useProjectContext = (): ProjectContextType => {
-  const context = useContext(ProjectContext);
-  if (!context) {
-    throw new Error("useProjects must be used within a ProjectProvider");
-  }
-  return context;
 };

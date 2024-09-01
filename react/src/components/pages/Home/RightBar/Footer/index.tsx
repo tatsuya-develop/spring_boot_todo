@@ -1,5 +1,5 @@
-import { useTaskContext } from "@/features/task/contexts";
 import useGetSelectedTask from "@/features/task/hooks/useGetSelectedTask";
+import useTaskContext from "@/features/task/hooks/useTaskContext";
 import { deleteTask } from "@/features/task/services/taskService";
 import { toYmdHm } from "@/lib/date";
 import { Flex, IconButton, Text } from "@chakra-ui/react";
@@ -8,10 +8,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const RightBarFooter = () => {
   const selectedTask = useGetSelectedTask();
-  const { resetSelectedTask } = useTaskContext();
+  const { deleteTasks, resetSelectedTask } = useTaskContext();
 
   const onClickDeleteTask = async () => {
     await deleteTask(selectedTask.id);
+    deleteTasks(selectedTask);
     resetSelectedTask();
   };
 
