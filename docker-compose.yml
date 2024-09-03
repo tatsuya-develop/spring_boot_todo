@@ -20,10 +20,21 @@ services:
     environment:
       - TZ=Asia/Tokyo
     volumes:
-      - ./docker/mysql/data:/var/lib/mysql # 実データの永続化
-      - ./docker/mysql/log:/var/log/mysql # logの永続化
+      - mysql-data:/var/lib/mysql # 実データの永続化
+      - mysql-log:/var/log/mysql # logの永続化
+      - ./docker/mysql/scripts:/docker-entrypoint-initdb.d # 初期クエリの実行
     ports:
       - 3306:3306
+  mysql_test:
+    build: ./docker/mysql
+    env_file:
+      - ./docker/mysql/db.env # MySQL設定ファイル
+    environment:
+      - TZ=Asia/Tokyo
+    volumes:
+      - ./docker/mysql/scripts:/docker-entrypoint-initdb.d # 初期クエリの実行
+    ports:
+      - 3316:3306
   node:
     build: ./docker/node
     working_dir: /app
@@ -34,3 +45,6 @@ services:
     command: sh -c "npm install && npm run dev"
     ports:
       - 3000:3000
+volumes:
+  mysql-data:
+  mysql-log:
