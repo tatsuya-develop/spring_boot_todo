@@ -5,6 +5,11 @@ import lombok.Getter;
 
 @Getter
 public class ProjectCreateRestRequest {
+  public ProjectCreateRestRequest(String name, String summary) {
+    this.name = name;
+    this.summary = summary;
+  }
+
   @NotEmpty
   private String name;
 
