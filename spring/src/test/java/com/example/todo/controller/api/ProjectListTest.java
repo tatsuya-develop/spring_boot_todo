@@ -64,7 +64,7 @@ class ProjectListTest {
 
     this.mockProjects = Arrays.asList(project1, project2);
 
-    Mockito.when(projectListService.invoke()).thenReturn(this.mockProjects);
+    Mockito.when(this.projectListService.invoke()).thenReturn(this.mockProjects);
   }
 
   @Test
