@@ -8,8 +8,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -20,11 +18,13 @@ import java.util.HashSet;
 import java.util.Set;
 import com.example.todo.enums.task.TaskPriority;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
 @Table(name = "tasks")
-public class Task {
+@EqualsAndHashCode(callSuper = false) // 親クラスの equals, hashCode を使わない（これを設定しないと警告が出る）
+public class Task extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,28 +65,6 @@ public class Task {
 
   @Column(name = "completed_at")
   private LocalDateTime completedAt;
-
-  @NotNull
-  @Column(name = "created_at")
-  private LocalDateTime createdAt;
-
-  @NotNull
-  @Column(name = "updated_at")
-  private LocalDateTime updatedAt;
-
-  // 新規作成処理前に呼び出される。
-  @PrePersist
-  protected void onCreate() {
-    LocalDateTime now = LocalDateTime.now();
-    this.createdAt = now;
-    this.updatedAt = now;
-  }
-
-  // 更新処理前に呼び出される。
-  @PreUpdate
-  protected void onUpdate() {
-    this.updatedAt = LocalDateTime.now();
-  }
 
   public boolean isCompleted() {
     return this.getCompletedAt() != null;

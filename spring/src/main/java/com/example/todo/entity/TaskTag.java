@@ -1,21 +1,20 @@
 package com.example.todo.entity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
 @Table(name = "task_tags")
-public class TaskTag {
+@EqualsAndHashCode(callSuper = false) // 親クラスの equals, hashCode を使わない（これを設定しないと警告が出る）
+public class TaskTag extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,14 +31,4 @@ public class TaskTag {
   @ManyToOne
   @JoinColumn(name = "tag_id", nullable = false)
   private Tag tag;
-
-  @Column(name = "created_at", nullable = false)
-  private LocalDateTime createdAt;
-
-  // 新規作成処理前に呼び出される。
-  @PrePersist
-  protected void onCreate() {
-    LocalDateTime now = LocalDateTime.now();
-    this.createdAt = now;
-  }
 }

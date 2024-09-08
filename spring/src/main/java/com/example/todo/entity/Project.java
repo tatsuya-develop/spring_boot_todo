@@ -7,16 +7,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
 @Table(name = "projects")
-public class Project {
+@EqualsAndHashCode(callSuper = false) // 親クラスの equals, hashCode を使わない（これを設定しないと警告が出る）
+public class Project extends BaseEntity {
 
   public static final Integer DEFDULT_PROJECT_ID = null;
 
@@ -34,26 +34,6 @@ public class Project {
   @Column(columnDefinition = "TEXT")
   private String summary;
 
-  @Column(name = "created_at", nullable = false)
-  private LocalDateTime createdAt;
-
-  @Column(name = "updated_at", nullable = false)
-  private LocalDateTime updatedAt;
-
   @Column(name = "deleted_at")
   private LocalDateTime deletedAt;
-
-  // 新規作成処理前に呼び出される。
-  @PrePersist
-  protected void onCreate() {
-    LocalDateTime now = LocalDateTime.now();
-    this.createdAt = now;
-    this.updatedAt = now;
-  }
-
-  // 更新処理前に呼び出される。
-  @PreUpdate
-  protected void onUpdate() {
-    this.updatedAt = LocalDateTime.now();
-  }
 }
