@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public class TaskUpdateRestRequest {
+
   @NotNull
   @Positive
   private final Integer id;
@@ -34,10 +35,10 @@ public class TaskUpdateRestRequest {
   private final ZonedDateTime completedAt;
 
   public LocalDateTime getDeadlineAt() {
-    return deadlineAt != null ? deadlineAt.toLocalDateTime() : null;
+    return this.deadlineAt != null ? this.deadlineAt.toLocalDateTime() : null;
   }
 
   public LocalDateTime getCompletedAt() {
-    return completedAt != null ? completedAt.toLocalDateTime() : null;
+    return this.completedAt != null ? this.completedAt.toLocalDateTime() : null;
   }
 }

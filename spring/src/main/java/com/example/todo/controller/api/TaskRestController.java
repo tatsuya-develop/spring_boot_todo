@@ -10,17 +10,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.example.todo.dto.request.tasks.TaskCompleteRestRequest;
 import com.example.todo.dto.request.tasks.TaskCreateRestRequest;
-import com.example.todo.dto.request.tasks.TaskListRestRequest;
+import com.example.todo.dto.request.tasks.TaskSearchRestRequest;
 import com.example.todo.dto.request.tasks.TaskSummaryRestRequest;
 import com.example.todo.dto.request.tasks.TaskUpdateRestRequest;
 import com.example.todo.dto.response.tasks.TaskBaseResponse;
 import com.example.todo.dto.response.tasks.TaskSummaryResponse;
-import com.example.todo.service.tasks.TaskCompleteService;
 import com.example.todo.service.tasks.TaskCreateService;
 import com.example.todo.service.tasks.TaskDeleteService;
-import com.example.todo.service.tasks.TaskListService;
+import com.example.todo.service.tasks.TaskSearchService;
 import com.example.todo.service.tasks.TaskSummaryService;
 import com.example.todo.service.tasks.TaskToggleService;
 import com.example.todo.service.tasks.TaskUpdateService;
@@ -30,31 +28,29 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RestController
 @RequestMapping("/api/tasks")
 public class TaskRestController {
-  private final TaskListService taskListService;
+  private final TaskSearchService taskSearchService;
   private final TaskSummaryService taskSummaryService;
   private final TaskCreateService taskCreateService;
   private final TaskUpdateService taskUpdateService;
   private final TaskDeleteService taskDeleteService;
-  private final TaskCompleteService taskCompleteService;
   private final TaskToggleService taskToggleService;
 
-  public TaskRestController(TaskListService taskListService, TaskSummaryService taskSummaryService,
-      TaskCreateService taskCreateService, TaskUpdateService taskUpdateService,
-      TaskDeleteService taskDeleteService, TaskCompleteService taskCompleteService,
+  public TaskRestController(TaskSearchService taskSearchService,
+      TaskSummaryService taskSummaryService, TaskCreateService taskCreateService,
+      TaskUpdateService taskUpdateService, TaskDeleteService taskDeleteService,
       TaskToggleService taskToggleService) {
-    this.taskListService = taskListService;
+    this.taskSearchService = taskSearchService;
     this.taskCreateService = taskCreateService;
     this.taskUpdateService = taskUpdateService;
     this.taskDeleteService = taskDeleteService;
-    this.taskCompleteService = taskCompleteService;
     this.taskSummaryService = taskSummaryService;
     this.taskToggleService = taskToggleService;
   }
 
   @GetMapping
-  public ResponseEntity<List<TaskBaseResponse>> get(
-      @Valid @ModelAttribute TaskListRestRequest request) {
-    List<TaskBaseResponse> tasks = this.taskListService.invoke(request);
+  public ResponseEntity<List<TaskBaseResponse>> search(
+      @Valid @ModelAttribute TaskSearchRestRequest request) {
+    List<TaskBaseResponse> tasks = this.taskSearchService.invoke(request);
     return ResponseEntity.ok(tasks);
   }
 
@@ -76,6 +72,7 @@ public class TaskRestController {
   public ResponseEntity<TaskBaseResponse> update(
       @Valid @RequestBody TaskUpdateRestRequest request) {
     TaskBaseResponse task = this.taskUpdateService.invoke(request);
+
     return ResponseEntity.ok(task);
   }
 
@@ -83,13 +80,6 @@ public class TaskRestController {
   public ResponseEntity<Void> delete(@PathVariable Integer id) {
     this.taskDeleteService.invoke(id);
     return ResponseEntity.noContent().build();
-  }
-
-  @PutMapping("/done")
-  public ResponseEntity<TaskBaseResponse> invoke(
-      @Valid @RequestBody TaskCompleteRestRequest request) {
-    TaskBaseResponse task = this.taskCompleteService.invoke(request);
-    return ResponseEntity.ok(task);
   }
 
   @PutMapping("/{id}/toggle")

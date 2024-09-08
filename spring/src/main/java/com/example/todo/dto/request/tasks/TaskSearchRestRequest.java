@@ -5,7 +5,9 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class TaskSummaryRestRequest {
+public class TaskSearchRestRequest {
 
   private final Integer projectId;
+
+  private final Boolean isCompleted;
 }

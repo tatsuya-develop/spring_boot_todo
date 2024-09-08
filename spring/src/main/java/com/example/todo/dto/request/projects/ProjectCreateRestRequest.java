@@ -2,16 +2,14 @@ package com.example.todo.dto.request.projects;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@RequiredArgsConstructor
 public class ProjectCreateRestRequest {
-  public ProjectCreateRestRequest(String name, String summary) {
-    this.name = name;
-    this.summary = summary;
-  }
 
   @NotEmpty
-  private String name;
+  private final String name;
 
-  private String summary;
+  private final String summary;
 }
