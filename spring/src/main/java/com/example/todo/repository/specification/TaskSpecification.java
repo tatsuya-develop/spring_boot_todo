@@ -16,8 +16,8 @@ public class TaskSpecification {
 
   public Specification<Task> isCompleted(Boolean isCompleted) {
     return isCompleted != null ? (root, query, builder) -> {
-      return isCompleted ? builder.isNotNull(root.get("completed_at"))
-          : builder.isNull(root.get("completed_at"));
+      return isCompleted ? builder.isNotNull(root.get("completedAt"))
+          : builder.isNull(root.get("completedAt"));
     } : null;
   }
 }
